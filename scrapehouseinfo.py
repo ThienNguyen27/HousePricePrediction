@@ -31,8 +31,8 @@ while page != my_scraper.website_pages:
         url = f"https://batdongsan.vn/ban-nha/p{page}"
     print(f"trang {page}")
 
-    thien = Scraper(url)
-    houses_on_page = thien.info_get()
+    page_scraper = Scraper(url)
+    houses_on_page = page_scraper.info_get()
     for house in houses_on_page:
         print(house)
 
