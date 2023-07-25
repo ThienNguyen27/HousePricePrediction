@@ -9,7 +9,23 @@ import re
 
 page = 1 
 website_pages = 2
-Price_area_list=[]
+
+# Construction of the Scaper bot
+class Scaper:
+    def __init__(self, url):
+        self.html = requests.get(url)
+    
+    def info_get(self):
+        self.raw_info = bs(self.html.text, 'html.parser')
+        self.data_list = self.raw_info.find('div', class_ = 'datalist')
+        self.list=[]
+        for name_list in self.data_list.find_all('div', class_ = 'name'):
+            for link in name_list.find_all('a', attrs = {'href': re.compile("^https://")}):
+                self.list.append(link.get('href'))
+        return self.list
+
+    
+
 while page != website_pages: 
     if page == 1:
         url = 'https://batdongsan.vn/ban-nha/'
@@ -18,25 +34,13 @@ while page != website_pages:
     print(f"trang {page}")
 
     # scrape house price and area by their span classes
-    html = requests.get(url) 
-    Scraped_rawinfo = bs(html.text, 'html.parser')
-    data_list = Scraped_rawinfo.find('div', class_ = 'datalist')  
-    # prices = Scraped_rawinfo.find_all('span', {'class': 'price'})
-    # areas = Scraped_rawinfo.find_all('span', {'class': 'acreage'})
-    # for price in prices:
-    #     print(price.string.strip())
-    # for area in areas:
-    #     print(area.text.strip('m2')) # eliminate area units  
-    
-    for name_list in data_list.find_all('div', class_ = 'name'):
-        for link in name_list.find_all('a', attrs={'href': re.compile("^https://")}):
-    # display the actual urls
-            print(link.get('href'))
+    t = Scaper(url)
+    t.info_get()
+    print(t.info_get())
+
     page += 1
 
 
-
-# print(Price_area_list)
 
 # tạo list của các nhà, mỗi nhà là một dictionary
 
