@@ -13,7 +13,7 @@ class Scraper():
 
     def info_get(self):
         for name_list in self.data_list.find_all('div', class_='name'):
-            house_data = {} # using dictionary extract other information such as price, area, bedrooms, etc.
+            house_data = {} # Using the dictionary extract other information such as price, area, bedrooms, etc.
             link = name_list.find('a', href=re.compile("^https://"))
             if link:
                 house_data['url'] = link.get('href')
@@ -23,9 +23,6 @@ class Scraper():
 my_scraper = Scraper('https://batdongsan.vn/ban-nha/')
 houses = my_scraper.info_get()
 
-for house in houses:
-    print(house['url'])
-
 page = 1
 while page != my_scraper.website_pages: 
     if page == 1:
@@ -34,9 +31,11 @@ while page != my_scraper.website_pages:
         url = f"https://batdongsan.vn/ban-nha/p{page}"
     print(f"trang {page}")
 
-    new_scraper = Scraper(url)
-    houses_on_page = new_scraper.info_get()
+    thien = Scraper(url)
+    houses_on_page = thien.info_get()
     for house in houses_on_page:
         print(house)
 
     page += 1
+
+# mission scrape other info 
