@@ -5,10 +5,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import re
+import threading
 # information for house: price, area, number of toilet, number of bedroom, location, no of floor
 
 page = 1 
-website_pages = 2
+website_pages = 7
+thread_num = 6
+data = []
+threads = []
 
 # Construction of the Scaper bot
 class Scaper:
@@ -25,20 +29,21 @@ class Scaper:
         return self.list
 
     
+if __name__ == "__main__":
+    while page != website_pages: 
+        if page == 1:
+            url = 'https://batdongsan.vn/ban-nha/'
+        else: 
+            url = f"https://batdongsan.vn/ban-nha/p{page}"
+        print(f"trang {page}")
 
-while page != website_pages: 
-    if page == 1:
-        url = 'https://batdongsan.vn/ban-nha/'
-    else: 
-        url = f"https://batdongsan.vn/ban-nha/p{page}"
-    print(f"trang {page}")
+        # scrape house price and area by their span classes
+        
+        thien = Scaper(url)
+        data.append(thien.info_get())
 
-    # scrape house price and area by their span classes
-    t = Scaper(url)
-    t.info_get()
-    print(t.info_get())
-
-    page += 1
+        page += 1
+    print(data)
 
 
 
