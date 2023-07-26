@@ -21,7 +21,7 @@ class Scraper():
         return self.house_list
 
 countingpage_scraper = Scraper('https://batdongsan.vn/ban-nha/') 
-houses = countingpage_scraper.info_get() # list of house on each page
+houses = countingpage_scraper.info_get() 
 
 
 page = 1
