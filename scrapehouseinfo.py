@@ -1,52 +1,56 @@
-# Using bs to scrape data
 from bs4 import BeautifulSoup as bs
 import requests
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 import re
 import threading
+import concurrent.futures
+import logging
+
 # information for house: price, area, number of toilet, number of bedroom, location, no of floor
 
+#Constances
 page = 1 
 website_pages = 7
 thread_num = 6
+landing_url = 'https://batdongsan.vn/ban-nha/'
 data = []
-threads = []
 
 # Construction of the Scaper bot
-class Scaper:
+class Scraper():
     def __init__(self, url):
         self.html = requests.get(url)
-    
-    def info_get(self):
         self.raw_info = bs(self.html.text, 'html.parser')
-        self.data_list = self.raw_info.find('div', class_ = 'datalist')
-        self.list=[]
-        for name_list in self.data_list.find_all('div', class_ = 'name'):
-            for link in name_list.find_all('a', attrs = {'href': re.compile("^https://")}):
-                self.list.append(link.get('href'))
-        return self.list
+        self.data_list = self.raw_info.find('div', class_='datalist')
+        Housing_records = int(self.raw_info.strong.string.replace(",", ""))
+        self.website_pages = Housing_records // 20 + 1  
+        self.house_list = []
 
-    
-if __name__ == "__main__":
-    while page != website_pages: 
+    def info_get(self):
+        for name_list in self.data_list.find_all('div', class_='name'):
+            house_data = {} # Using the dictionary extract other information such as price, area, bedrooms, etc.
+            link = name_list.find('a', href=re.compile("^https://"))
+            if link:
+                house_data['url'] = link.get('href')
+                self.house_list.append(house_data)
+        return self.house_list
+
+Chithien = Scraper(landing_url)
+
+houses = Chithien.info_get()
+thien = Scraper(landing_url)
+page = 1
+if __name__ == "__main__": 
+    while page != Chithien.website_pages: 
         if page == 1:
             url = 'https://batdongsan.vn/ban-nha/'
         else: 
             url = f"https://batdongsan.vn/ban-nha/p{page}"
         print(f"trang {page}")
 
-        # scrape house price and area by their span classes
-        
-        thien = Scaper(url)
-        data.append(thien.info_get())
+
+            
+        houses_on_page = thien.info_get()
+        # for house in houses_on_page:
+        #     print(house)
+
 
         page += 1
-    print(data)
-
-
-
-# tạo list của các nhà, mỗi nhà là một dictionary
-
-# list_of_house = []
