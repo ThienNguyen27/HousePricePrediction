@@ -20,19 +20,19 @@ class Scraper():
                 self.house_list.append(house_data)
         return self.house_list
 
-my_scraper = Scraper('https://batdongsan.vn/ban-nha/')
-houses = my_scraper.info_get()
+countingpage_scraper = Scraper('https://batdongsan.vn/ban-nha/') 
+houses = countingpage_scraper.info_get() # list of house on each page
+
 
 page = 1
-while page != my_scraper.website_pages: 
+while page != countingpage_scraper.website_pages: 
     if page == 1:
         url = 'https://batdongsan.vn/ban-nha/'
     else: 
         url = f"https://batdongsan.vn/ban-nha/p{page}"
     print(f"trang {page}")
-
-    page_scraper = Scraper(url)
-    houses_on_page = page_scraper.info_get()
+    house_scraper = Scraper(url)
+    houses_on_page = house_scraper.info_get()
     for house in houses_on_page:
         print(house)
 
