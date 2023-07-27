@@ -44,7 +44,7 @@ class Scraper():
 
                 # Toilet
                 toilet = house_info.find("strong", string="Phòng WC:")
-                house_data['toilet'] = toilet.next_sibling.string.strip("WC") if toilet else "N/A"
+                house_data['toilets'] = toilet.next_sibling.string.strip("WC") if toilet else "N/A"
 
                 # Location
                 location_item = house_info.find("ul", class_="uk-breadcrumb").find_all("li") 
@@ -54,16 +54,20 @@ class Scraper():
                 house_data['location'] = location if location_item else "N/A"
                 self.house_list.append(house_data)
 
+                # News
+                news = house_info.find("div", class_ = "content")
+                house_data['news'] = news.text.replace("\r\n"," ").replace("\n"," ")
 
         return self.house_list
 
 countingpage_scraper = Scraper('https://batdongsan.vn/ban-nha/') 
 houses = countingpage_scraper.url_get() 
 
+
 url_list = []
 page = 1
 # while page != countingpage_scraper.website_pages: 
-while page != 4:
+while page != 6:
     if page == 1:
         url = 'https://batdongsan.vn/ban-nha/'
     else: 
@@ -71,16 +75,15 @@ while page != 4:
     print(f"trang {page}")
     
     house_scraper = Scraper(url)
-    houses_on_page = house_scraper.url_get()
+    houses_on_page = house_scraper.data_get()
     
 
     for house in houses_on_page:
-        url_list.append(house)
+        print(house)
         
-    print(len(url_list))
 
     page += 1
-print(len(url_list))
+
 
 #Start threading
 
