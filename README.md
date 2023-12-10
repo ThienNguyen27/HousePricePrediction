@@ -2,19 +2,19 @@
 
 ## Project Overview
 
-This project aims to leverage data from a housing website to predict property prices. We developed a robust pipeline for scraping housing data, filling in missing values by extracting details from unstructured house descriptions, and predicting house prices. Our predictive models include Random Forest and Support Vector Machine (SVM).
+This project uses data from a housing website to predict property prices. We developed a robust pipeline for scraping housing data, filling in missing values by extracting details from unstructured house descriptions and predicting house prices. Our predictive models include Random Forest Regressor (RFR) and Support Vector Regression (SVR).
 
 ## Features
 
 - **Data Scraping**: Collect housing data programmatically from targeted housing websites.
 - **Data Enrichment**: Techniques to fill in null values by processing unstructured house descriptions.
-- **Predictive Analysis**: Employ RandomForest and SVM to build models that predict house prices.
+- **Predictive Analysis**: Employ RFR and SVR to build models that predict house prices.
 
 ## Model Details
 
 ### Support Vector Regression (SVR)
-- **Model Description**: SVR is employed for regression challenges in our project. It is effective in capturing complex relationships in the data.
-- **Parameters**: Default parameters of SVR are used. SVR in scikit-learn comes with several parameters like `C`, `epsilon`, and `kernel`. Since we did not specify these, the model uses the default settings, which are usually sufficient for a broad range of problems.
+- **Model Description**: Our project employs SVR for regression challenges. It is effective in capturing complex relationships in the data.
+- **Parameters**: Default parameters of SVR are used. SVR in scikit-learn comes with several parameters like `C`, `epsilon`, and `kernel`. Since we did not specify these, the model uses the default settings, usually sufficient for a broad range of problems.
 
 ### Random Forest Regressor (RFR)
 - **Model Description**: RandomForest is an ensemble learning method known for its high accuracy and ability to run efficiently on large databases. It works well for regression tasks.
@@ -24,7 +24,7 @@ This project aims to leverage data from a housing website to predict property pr
 Discuss here any comparison you made between the models, their performance, or any specific insights you gained (e.g., feature importance, model accuracy).
 
 ### Note
-The parameters of these models, especially for RandomForest, can be further tuned using techniques like Grid Search or Random Search to potentially improve the model performance based on the specific characteristics of the dataset.
+The parameters of these models, especially for RFR, can be further tuned using techniques like Grid Search or Random Search to potentially improve the model performance based on the specific characteristics of the dataset.
 
 ## Getting Started
 
