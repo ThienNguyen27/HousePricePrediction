@@ -1,3 +1,5 @@
+from function import * # use all functions from the function.py file
+
 countingpage_scraper = Scraper('https://batdongsan.vn/ban-nha/')
 houses = countingpage_scraper.url_get()
 url_list = []
