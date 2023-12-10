@@ -27,3 +27,9 @@ print(f"Time to complete getting url: {finishing_time - starting_time}s")
 # print(url_list)
 # Start crawling through the url lists
 house_data = Scraper_thread(url_list)
+
+# create df and store file csv in the local device
+import pandas as pd
+
+df = pd.DataFrame(house_data)
+df.to_csv('house.csv')
